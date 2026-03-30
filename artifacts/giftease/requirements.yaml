@@ -1,0 +1,19 @@
+packages:
+  "date-fns": "For date parsing and formatting"
+  "framer-motion": "For smooth page transitions and beautiful modal animations"
+  "react-hook-form": "For robust form state management"
+  "@hookform/resolvers": "For integrating Zod validation with react-hook-form"
+  "zod": "For client-side form schema validation"
+  "lucide-react": "For beautiful consistent iconography"
+
+images:
+  - path: "artifacts/giftease/public/images/hero-gifting.png"
+    description: "A beautiful 3D illustration of wrapped gift boxes with ribbons floating in a warm, sunny environment with soft lighting, peach and soft pink color palette, minimalist and modern style."
+    aspect_ratio: "16:9"
+  - path: "artifacts/giftease/public/images/empty-state.png"
+    description: "A cute minimalist 3D illustration of an empty open gift box with a little confetti around it, soft warm colors, white background."
+    aspect_ratio: "1:1"
+
+notes:
+  - "Imported React Query hooks directly from @workspace/api-client-react as per implementation notes."
+  - "Using wouter for routing."

@@ -1,0 +1,593 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: GiftEase API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: recipients
+    description: Gift recipients
+  - name: occasions
+    description: Gift occasions / events
+  - name: gifts
+    description: Gift ideas
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /recipients:
+    get:
+      operationId: listRecipients
+      tags: [recipients]
+      summary: List all recipients
+      responses:
+        "200":
+          description: List of recipients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Recipient"
+    post:
+      operationId: createRecipient
+      tags: [recipients]
+      summary: Create a recipient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRecipientBody"
+      responses:
+        "201":
+          description: Created recipient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipient"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /recipients/{id}:
+    get:
+      operationId: getRecipient
+      tags: [recipients]
+      summary: Get a recipient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Recipient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipient"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updateRecipient
+      tags: [recipients]
+      summary: Update a recipient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRecipientBody"
+      responses:
+        "200":
+          description: Updated recipient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipient"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteRecipient
+      tags: [recipients]
+      summary: Delete a recipient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /occasions:
+    get:
+      operationId: listOccasions
+      tags: [occasions]
+      summary: List all occasions
+      responses:
+        "200":
+          description: List of occasions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Occasion"
+    post:
+      operationId: createOccasion
+      tags: [occasions]
+      summary: Create an occasion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOccasionBody"
+      responses:
+        "201":
+          description: Created occasion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Occasion"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /occasions/{id}:
+    patch:
+      operationId: updateOccasion
+      tags: [occasions]
+      summary: Update an occasion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOccasionBody"
+      responses:
+        "200":
+          description: Updated occasion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Occasion"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteOccasion
+      tags: [occasions]
+      summary: Delete an occasion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /gifts:
+    get:
+      operationId: listGifts
+      tags: [gifts]
+      summary: List all gifts
+      parameters:
+        - name: recipientId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: occasionId
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of gifts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Gift"
+    post:
+      operationId: createGift
+      tags: [gifts]
+      summary: Create a gift idea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGiftBody"
+      responses:
+        "201":
+          description: Created gift
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Gift"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /gifts/{id}:
+    patch:
+      operationId: updateGift
+      tags: [gifts]
+      summary: Update a gift
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGiftBody"
+      responses:
+        "200":
+          description: Updated gift
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Gift"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteGift
+      tags: [gifts]
+      summary: Delete a gift
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /gifts/{id}/purchased:
+    patch:
+      operationId: toggleGiftPurchased
+      tags: [gifts]
+      summary: Toggle gift purchased status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ToggleGiftPurchasedBody"
+      responses:
+        "200":
+          description: Updated gift
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Gift"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Recipient:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        relationship:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - relationship
+        - notes
+        - createdAt
+        - updatedAt
+
+    CreateRecipientBody:
+      type: object
+      properties:
+        name:
+          type: string
+        relationship:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+      required:
+        - name
+
+    UpdateRecipientBody:
+      type: object
+      properties:
+        name:
+          type: string
+        relationship:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+
+    Occasion:
+      type: object
+      properties:
+        id:
+          type: integer
+        recipientId:
+          type: ["integer", "null"]
+        title:
+          type: string
+        date:
+          type: ["string", "null"]
+          format: date
+        budget:
+          type: ["number", "null"]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - recipientId
+        - title
+        - date
+        - budget
+        - notes
+        - createdAt
+        - updatedAt
+
+    CreateOccasionBody:
+      type: object
+      properties:
+        recipientId:
+          type: ["integer", "null"]
+        title:
+          type: string
+        date:
+          type: ["string", "null"]
+          format: date
+        budget:
+          type: ["number", "null"]
+        notes:
+          type: ["string", "null"]
+      required:
+        - title
+
+    UpdateOccasionBody:
+      type: object
+      properties:
+        recipientId:
+          type: ["integer", "null"]
+        title:
+          type: string
+        date:
+          type: ["string", "null"]
+          format: date
+        budget:
+          type: ["number", "null"]
+        notes:
+          type: ["string", "null"]
+
+    Gift:
+      type: object
+      properties:
+        id:
+          type: integer
+        recipientId:
+          type: ["integer", "null"]
+        occasionId:
+          type: ["integer", "null"]
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: ["number", "null"]
+        url:
+          type: ["string", "null"]
+        purchased:
+          type: boolean
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - recipientId
+        - occasionId
+        - name
+        - description
+        - price
+        - url
+        - purchased
+        - notes
+        - createdAt
+        - updatedAt
+
+    CreateGiftBody:
+      type: object
+      properties:
+        recipientId:
+          type: ["integer", "null"]
+        occasionId:
+          type: ["integer", "null"]
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: ["number", "null"]
+        url:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+      required:
+        - name
+
+    UpdateGiftBody:
+      type: object
+      properties:
+        recipientId:
+          type: ["integer", "null"]
+        occasionId:
+          type: ["integer", "null"]
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: ["number", "null"]
+        url:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+
+    ToggleGiftPurchasedBody:
+      type: object
+      properties:
+        purchased:
+          type: boolean
+      required:
+        - purchased
