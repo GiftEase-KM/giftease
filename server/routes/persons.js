@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.get('/favorites', async (req, res) => {
   try {
-    const { data, error } = await req.supabase.from('persons').select('id, full_name, nickname, relationship, avatar_url').eq('is_favorite', true).order('full_name');
+    const { data, error } = await req.supabase.from('persons').select('id, full_name, nickname, relationship, avatar_url, is_favorite').eq('is_favorite', true).order('full_name');
     if (error) throw error;
     res.json(data);
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -27,14 +27,19 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { full_name, nickname, relationship, avatar_url, is_favorite, notes, addresses } = req.body;
-    const { data: person, error: personError } = await req.supabase.from('persons').insert({ user_id: req.user.id, full_name, nickname, relationship, avatar_url, is_favorite: is_favorite || false, notes }).select().single();
+    const { full_name, nickname, relationship, avatar_url, is_favorite, notes, card_signature, addresses } = req.body;
+    const { data: person, error: personError } = await req.supabase.from('persons').insert({
+      user_id: req.user.id, full_name, nickname, relationship, avatar_url,
+      is_favorite: is_favorite || false, notes, card_signature,
+    }).select().single();
     if (personError) throw personError;
+
     if (addresses && addresses.length > 0) {
       const addressRows = addresses.map((addr) => ({ person_id: person.id, ...addr }));
       const { error: addrError } = await req.supabase.from('person_addresses').insert(addressRows);
       if (addrError) throw addrError;
     }
+
     const { data: fullPerson, error: fetchError } = await req.supabase.from('persons').select('*, person_addresses(*)').eq('id', person.id).single();
     if (fetchError) throw fetchError;
     res.status(201).json(fullPerson);
@@ -43,8 +48,10 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const { full_name, nickname, relationship, avatar_url, is_favorite, notes } = req.body;
-    const { data, error } = await req.supabase.from('persons').update({ full_name, nickname, relationship, avatar_url, is_favorite, notes }).eq('id', req.params.id).select().single();
+    const { full_name, nickname, relationship, avatar_url, is_favorite, notes, card_signature } = req.body;
+    const { data, error } = await req.supabase.from('persons').update({
+      full_name, nickname, relationship, avatar_url, is_favorite, notes, card_signature,
+    }).eq('id', req.params.id).select().single();
     if (error) throw error;
     res.json(data);
   } catch (err) { res.status(500).json({ error: err.message }); }

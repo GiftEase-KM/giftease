@@ -9,6 +9,7 @@ import personsRoutes from './routes/persons.js';
 import addressesRoutes from './routes/addresses.js';
 import eventsRoutes from './routes/events.js';
 import paymentMethodsRoutes from './routes/paymentMethods.js';
+import handwryttenRoutes from './routes/handwrytten.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,11 +23,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Protected API routes
 app.use('/api/profile', requireAuth, profileRoutes);
 app.use('/api/persons', requireAuth, personsRoutes);
 app.use('/api/persons', requireAuth, addressesRoutes);
 app.use('/api/events', requireAuth, eventsRoutes);
 app.use('/api/payment-methods', requireAuth, paymentMethodsRoutes);
+app.use('/api/handwrytten', requireAuth, handwryttenRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.resolve(__dirname, '..', 'dist');

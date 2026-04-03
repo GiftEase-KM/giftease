@@ -8,7 +8,6 @@ export default function WelcomePage() {
   return (
     <div className="welcome-page">
       <div className="welcome-bg">
-        {/* Decorative doodles */}
         <div className="doodle doodle-1">🎂</div>
         <div className="doodle doodle-2">🎁</div>
         <div className="doodle doodle-3">💌</div>
@@ -21,11 +20,14 @@ export default function WelcomePage() {
 
       <div className="welcome-content">
         <div className="welcome-logo">
-          <span className="welcome-tagline">Welcome to</span>
+          <span className="welcome-tagline-above">Welcome to</span>
           <div className="welcome-brand">
             <div className="welcome-icon"><GiftIcon /></div>
             <h1>GIFT<br />EASE</h1>
           </div>
+          <p className="welcome-tagline">
+            Keep your loved ones in your thoughts — never miss a moment that matters.
+          </p>
         </div>
 
         <div className="welcome-actions">

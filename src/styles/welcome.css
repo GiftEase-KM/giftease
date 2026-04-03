@@ -5,7 +5,7 @@
   justify-content: space-between;
   position: relative;
   overflow: hidden;
-  background: var(--ge-sage-300);
+  background: linear-gradient(170deg, var(--ge-sage-100) 0%, var(--ge-sage-200) 50%, var(--ge-sage-300) 100%);
 }
 
 .welcome-bg {
@@ -17,7 +17,7 @@
 .doodle {
   position: absolute;
   font-size: 2rem;
-  opacity: 0.25;
+  opacity: 0.2;
   animation: float 6s ease-in-out infinite;
 }
 
@@ -48,11 +48,11 @@
 
 .welcome-logo {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 48px;
   animation: fadeInUp 0.8s ease;
 }
 
-.welcome-tagline {
+.welcome-tagline-above {
   font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 400;
@@ -85,8 +85,21 @@
   letter-spacing: 0.04em;
 }
 
+.welcome-tagline {
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ge-text-secondary);
+  line-height: 1.5;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 .welcome-actions {
   width: 100%;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   gap: 12px;

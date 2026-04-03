@@ -1,0 +1,116 @@
+.onboarding-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--ge-bg-page);
+}
+
+.onboarding-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+}
+
+.onboarding-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.onboarding-logo-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--ge-teal-600);
+  margin-bottom: 4px;
+}
+
+.onboarding-logo-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.onboarding-logo-text {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ge-teal-700);
+  letter-spacing: 0.04em;
+}
+
+.onboarding-illustration {
+  width: 100%;
+  height: 220px;
+  background: var(--ge-bg-card);
+  border-radius: var(--ge-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  box-shadow: var(--ge-shadow-sm);
+  border: 1px solid var(--ge-border-light);
+}
+
+.onboarding-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  animation: bounceIn 0.5s ease;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.onboarding-text {
+  text-align: center;
+  margin-bottom: 28px;
+  background: var(--ge-bg-card);
+  border-radius: var(--ge-radius-lg);
+  padding: 24px 20px;
+  width: 100%;
+  box-shadow: var(--ge-shadow-sm);
+  border: 1px solid var(--ge-border-light);
+}
+
+.onboarding-text h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ge-text-primary);
+  margin-bottom: 10px;
+}
+
+.onboarding-text p {
+  font-size: 0.9rem;
+  color: var(--ge-text-secondary);
+  line-height: 1.55;
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.onboarding-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ge-sage-300);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.onboarding-dot.active {
+  background: var(--ge-teal-600);
+  transform: scale(1.2);
+}

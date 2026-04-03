@@ -50,4 +50,12 @@ export const api = {
   getPaymentMethods: () => request('/payment-methods'),
   addPaymentMethod: (body) => request('/payment-methods', { method: 'POST', body: JSON.stringify(body) }),
   deletePaymentMethod: (id) => request(`/payment-methods/${id}`, { method: 'DELETE' }),
+
+  // Handwrytten
+  getHWCategories: () => request('/handwrytten/categories'),
+  getHWCards: (categoryId, page = 0) => request(`/handwrytten/cards?page=${page}${categoryId ? `&category_id=${categoryId}` : ''}`),
+  getHWCard: (id) => request(`/handwrytten/cards/${id}`),
+  getHWFonts: () => request('/handwrytten/fonts'),
+  placeHWOrder: (body) => request('/handwrytten/order', { method: 'POST', body: JSON.stringify(body) }),
+  getHWOrder: (id) => request(`/handwrytten/order/${id}`),
 };
